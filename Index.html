@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+    .Clock-container {
+  margin-top:8% ;
+  padding: 30px;
+}
+.Clock-dial {
+  z-index: -1;
+  margin: auto;
+  outline: 30px solid black;
+  position: relative;
+  width: 27%;
+  height: 400px;
+  border-radius: 50%;
+  border: 10px solid rgb(255, 0, 0);
+  background-color: black;
+}
+.Second-hand {
+  background-color: red;
+  position: absolute;
+  width: 3px;
+  height: 150px;
+  left: 50%;
+  bottom: 50%;
+  border-radius:50% 50% 0 0 ;
+  transform-origin: bottom;
+  z-index: 10;
+}
+.Clock-time {
+  margin: 20%;
+  text-align: center;
+  color: red;
+}
+#Clock-hour,#Clock-minute,#Clock-session{
+margin-top: 20%;
+font-size:20px;
+display: inline;
+}
+#Clock-date,#Clock-month,#Clock-year{
+  margin-top: 200px;
+  font-size: 15px;
+  display: inline;
+}
+
+.Clock-day {
+  margin-top: 20%;
+  z-index: 2;
+  font-size: 10px;
+  text-align: center;
+  color: red;
+}
+.Clock-year-date {
+  margin-top:20% ;
+  z-index: 20px;
+  /* font-size: 20px; */
+  text-align: center;
+  color: red;
+}
+#Clock-session{
+  font-size: 10px;
+}
+    </style>
+</head>
+<body onload="rotateHands()">
+    <div class="Clock-container">
+        <div class="Clock-dial">
+            <div class="hand Second-hand"></div>
+            <div class="Clock-time">
+                <h4 id="Clock-hour"></h4>
+                <h4 id="Clock-minute"></h4>
+                <h4 id="Clock-session"> </h4>
+            </div>
+            <div class="Clock-day">
+                <h4 id="Clock-day"></h4>
+
+            </div>
+            <div class="Clock-year-date">
+                <h4 id="Clock-date"></h4>
+                <h4 id="Clock-month"> </h4>
+                <h4 id="Clock-year"> </h4>
+            </div>
+            <div class="clock-time">
+                <h4 id="Clock-unite"></h4>
+            </div>
+        </div>
+    </div>
+    <script>
+        function rotateHands() {
+    let TimeObject = new Date();
+    let year = TimeObject.getFullYear();
+    let hour = TimeObject.getHours();
+    let minute = TimeObject.getMinutes();
+    let second = TimeObject.getSeconds();
+    let month = TimeObject.getMonth();
+    let date = TimeObject.getDate();
+    let day = JSON.stringify(TimeObject.getDay());
+    let secondHand = document.querySelector(".Second-hand");
+    let secondRotation = second * 6;
+    secondHand.style.transform = `rotate(${secondRotation}deg)`;
+    let session="";
+    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'ThursDay', 'Friday', 'Saturday']
+    let Months =['January','Febuary','March','April','May','June','July','August','September','Octbar','November','December']
+    hour < 10 ? hour = '0' + hour : hour = hour         ;
+    minute < 10 ? minute = '0' + minute : minute = minute;
+    date < 10 ? date = "0" + date :date=date;
+    hour > 12 ? session = "PM" : session = "AM";
+    hour >= 12 ? hour = hour - 12 : hour = hour;
+    document.getElementById('Clock-hour').innerText = `${hour}:`;
+    document.getElementById('Clock-minute').innerText = `${minute} `;
+    document.getElementById('Clock-day').innerText = `${days[day]}`;
+    console.log(session);
+    document.getElementById('Clock-session').innerText = `${session}`;
+    document.getElementById('Clock-date').innerText = `${date}-`;
+    document.getElementById('Clock-month').innerText = `${Months[month]},`;
+    document.getElementById('Clock-year').innerText = `${year}`;
+  }
+  setInterval(rotateHands, 1000); 
+    </script>
+</body>
+
+</html>
